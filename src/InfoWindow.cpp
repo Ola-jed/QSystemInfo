@@ -35,8 +35,6 @@ void InfoWindow::buildTabs()
     #endif
     for(auto i = 0;i < ui->tabWidget->count();i++)
     {
-        qDebug() << "Size  : " << ui->tabWidget->count();
-        qDebug() << "Current Index : " << i;
         getTextEditAt(i)->setReadOnly(true);
     }
 }
