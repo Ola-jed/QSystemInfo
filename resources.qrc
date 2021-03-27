@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/bios.ico</file>
+        <file>assets/cpu.ico</file>
+        <file>assets/disk.ico</file>
+        <file>assets/network.ico</file>
+        <file>assets/system.ico</file>
+        <file>assets/icon.ico</file>
+        <file>assets/help.ico</file>
+        <file>assets/about.ico</file>
+        <file>assets/save.ico</file>
+    </qresource>
+</RCC>
