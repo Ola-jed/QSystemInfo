@@ -31,10 +31,12 @@ void InfoWindow::buildTabs()
     ui->tabWidget->addTab(new QTextEdit(),QIcon(":assets/cpu.ico"),tr("Cpu"));
     ui->tabWidget->addTab(new QTextEdit(),QIcon(":assets/network.ico"),tr("Network"));
     #ifdef Q_OS_WIN // If we are on windows, we can call bios information with regedit
-        ui->tabWidget->addTab(new QLabel(),QIcon(":assets/bios.ico"),tr("Bios"));
+        ui->tabWidget->addTab(new QTextEdit(),QIcon(":assets/bios.ico"),tr("Bios"));
     #endif
     for(auto i = 0;i < ui->tabWidget->count();i++)
     {
+        qDebug() << "Size  : " << ui->tabWidget->count();
+        qDebug() << "Current Index : " << i;
         getTextEditAt(i)->setReadOnly(true);
     }
 }

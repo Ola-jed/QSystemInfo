@@ -44,7 +44,15 @@ namespace SysInfo
 
     inline int volumesNumber()
     {
-        return QStorageInfo::mountedVolumes().size();
+        int size = 0;
+        auto const mountedVolumes = QStorageInfo::mountedVolumes();
+        std::for_each(std::begin(mountedVolumes),std::end(mountedVolumes),[&size](QStorageInfo tmpVolume){
+            if(tmpVolume.isReady() && tmpVolume.isValid())
+            {
+                size++;
+            }
+        });
+        return size;
     }
 
     inline QList<QMap<QString,QString>> getDiskInformation()
@@ -173,7 +181,6 @@ namespace SysInfo
         biosInfo.push_back({{"BIOS Release Date",settings.value("BIOSReleaseDate", "0").toString()}});
         biosInfo.push_back({{"System Manufacturer",settings.value("SystemManufacturer", "0").toString()}});
         biosInfo.push_back({{"Product Name",settings.value("SystemProductName", "0").toString()}});
-        biosInfo.push_back({{"System SKU",settings.value("SystemSKU", "0").toString()}});
         return biosInfo;
     }
 
@@ -187,6 +194,7 @@ namespace SysInfo
             {
                 biosInfoStr.append(e+" : "+tmp[e]);
             }
+            biosInfoStr.append("\n");
         }
         return biosInfoStr;
     }
