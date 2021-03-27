@@ -70,7 +70,7 @@ void InfoWindow::loadNetworkInfo()
 void InfoWindow::loadBiosInfo()
 {
     #ifdef Q_OS_WIN // If we are on windows, we need this value
-        getLabelAt(BIOS_INDEX_IN_TAB)->setText(SysInfo::getBiosInfoAsStr());
+        getTextEditAt(BIOS_INDEX_IN_TAB)->setText(SysInfo::getBiosInfoAsStr());
     #endif
 }
 

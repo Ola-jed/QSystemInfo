@@ -7,6 +7,7 @@
 #include <QScreen>
 #include <QStyle>
 #include <QFile>
+#include <QLabel>
 #include <QGuiApplication>
 #include <QFileDialog>
 #include <QMessageBox>
