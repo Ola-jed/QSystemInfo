@@ -59,6 +59,8 @@ void InfoWindow::loadDiskInfo()
 
 void InfoWindow::loadCpuInfo()
 {
+    //TODO
+    // Nothing is shown on windows
     getTextEditAt(CPU_INDEX_IN_TAB)->setText(SysInfo::getCpuAndGpuInfoAsStr());
 }
 
