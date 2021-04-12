@@ -9,5 +9,6 @@
         <file>assets/help.ico</file>
         <file>assets/about.ico</file>
         <file>assets/save.ico</file>
+        <file>assets/qt.ico</file>
     </qresource>
 </RCC>

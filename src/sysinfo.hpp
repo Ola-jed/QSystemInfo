@@ -1,14 +1,15 @@
 #ifndef QCOMINFO_SYSINFO_HPP
 #define QCOMINFO_SYSINFO_HPP
 
-#include <QSysInfo>
-#include <QStorageInfo>
-#include <QNetworkInterface>
-#include <QSettings>
-#include <QProcess>
+#include "qglobal.h"
 #include <QMap>
 #include <QList>
 #include <QString>
+#include <QProcess>
+#include <QSysInfo>
+#include <QSettings>
+#include <QStorageInfo>
+#include <QNetworkInterface>
 
 namespace SysInfo
 {
@@ -22,7 +23,7 @@ namespace SysInfo
 
     inline QMap<QString,QString> getSystemInformation()
     {
-        auto systemInfo = QMap<QString,QString>{};
+        QMap<QString,QString> systemInfo{};
         systemInfo.insert("CPU Architecture",QSysInfo::currentCpuArchitecture());
         systemInfo.insert("Product type",QSysInfo::prettyProductName());
         systemInfo.insert("Kernel type",QSysInfo::kernelType());
@@ -35,7 +36,8 @@ namespace SysInfo
     {
         QString infoStrBuilder{""};
         auto const t {SysInfo::getSystemInformation()};
-        for(auto const &temp : t.keys())
+        auto const keysList{t.keys()};
+        for(auto const &temp : keysList)
         {
             infoStrBuilder += temp+" : "+t[temp]+"\n\n";
         }
@@ -45,7 +47,7 @@ namespace SysInfo
     inline int volumesNumber()
     {
         int size = 0;
-        auto const mountedVolumes = QStorageInfo::mountedVolumes();
+        auto const mountedVolumes{QStorageInfo::mountedVolumes()};
         std::for_each(std::begin(mountedVolumes),std::end(mountedVolumes),[&size](QStorageInfo tmpVolume){
             if(tmpVolume.isReady() && tmpVolume.isValid())
             {
@@ -57,7 +59,7 @@ namespace SysInfo
 
     inline QList<QMap<QString,QString>> getDiskInformation()
     {
-        auto diskInfo = QList<QMap<QString,QString>>{};
+        QList<QMap<QString,QString>> diskInfo{};
         auto const mountedVolumes{QStorageInfo::mountedVolumes()};
         foreach (const QStorageInfo &storage, mountedVolumes)
         {
@@ -96,8 +98,8 @@ namespace SysInfo
 
     inline QList<QMap<QString,QString>> getNetworkInformation()
     {
-        auto networkInfo = QList<QMap<QString,QString>>{};
-        foreach(QNetworkInterface networkInterface, QNetworkInterface::allInterfaces())
+        QList<QMap<QString,QString>> networkInfo{};
+        foreach(const QNetworkInterface &networkInterface, QNetworkInterface::allInterfaces())
         {
             if (networkInterface.flags().testFlag(QNetworkInterface::IsUp))
             {
@@ -106,8 +108,8 @@ namespace SysInfo
                     if ( entry.ip().toString().contains("."))
                     {
                         const auto tempMap = QMap<QString,QString>{{"Interface",networkInterface.name()},
-                                                             {"IP",entry.ip().toString()},
-                                                             {"MAC",networkInterface.hardwareAddress().toLocal8Bit().constData()}};
+                                                     {"IP",entry.ip().toString()},
+                                                     {"MAC",networkInterface.hardwareAddress().toLocal8Bit().constData()}};
                         networkInfo.push_back(tempMap);
                     }
                 }
@@ -133,7 +135,7 @@ namespace SysInfo
 
     inline QList<QMap<QString,QString>> getCpuAndGpuInfo()
     {
-        auto cpuAndGpuInfo = QList<QMap<QString,QString>>{};
+        QList<QMap<QString,QString>> cpuAndGpuInfo{};
         QProcess process_system;
         #if defined(Q_OS_LINUX)
             process_system.start(LINUX_CPU_NAME);
@@ -173,7 +175,7 @@ namespace SysInfo
 
     inline QList<QMap<QString,QString>> getBiosInfo()
     {
-        auto biosInfo = QList<QMap<QString,QString>>{};
+        QList<QMap<QString,QString>> biosInfo{};
         QSettings settings(BIOS_KEY, QSettings::NativeFormat);
         biosInfo.push_back({{"BaseBoard Manufacturer",settings.value("BaseBoardManufacturer", "0").toString()}});
         biosInfo.push_back({{"BaseBoard Product",settings.value("BaseBoardProduct", "0").toString()}}) ;

@@ -44,6 +44,7 @@ void InfoWindow::makeConnections()
     connect(ui->saveInFile,&QAction::triggered,this,&InfoWindow::saveInfoIntoFile);
     connect(ui->aboutQSystemInfo,&QAction::triggered,this,&InfoWindow::onAbout);
     connect(ui->help,&QAction::triggered,this,&InfoWindow::onAbout);
+    connect(ui->aboutQt,&QAction::triggered,this,&QApplication::aboutQt);
 }
 
 // Loading all the information
