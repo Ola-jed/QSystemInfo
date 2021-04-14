@@ -1,6 +1,5 @@
 # QSystemInfo
 
-
 QSystemInfo is a lightweight system information tool written in c++ with the qt framework
 
 ## How to build?

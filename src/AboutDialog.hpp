@@ -1,7 +1,3 @@
-//
-// Created by ola on 27/03/2021.
-//
-
 #ifndef QSYSTEMINFO_ABOUTDIALOG_HPP
 #define QSYSTEMINFO_ABOUTDIALOG_HPP
 

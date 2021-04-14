@@ -21,6 +21,7 @@ namespace SysInfo
     const QString LINUX_CPU_NAME {"cat /proc/cpuinfo | grep 'model name' | uniq"};
     const QString BIOS_KEY{"HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS"};
 
+    // Get information about system, kernel
     inline QMap<QString,QString> getSystemInformation()
     {
         QMap<QString,QString> systemInfo{};
@@ -32,6 +33,7 @@ namespace SysInfo
         return systemInfo;
     }
 
+    // Call system informations and format in a string
     inline QString getSystemInformationAsStr()
     {
         QString infoStrBuilder{""};
@@ -44,11 +46,12 @@ namespace SysInfo
         return infoStrBuilder;
     }
 
+    // Get all the mounted volumes number
     inline int volumesNumber()
     {
         int size = 0;
         auto const mountedVolumes{QStorageInfo::mountedVolumes()};
-        std::for_each(std::begin(mountedVolumes),std::end(mountedVolumes),[&size](QStorageInfo tmpVolume){
+        std::for_each(std::begin(mountedVolumes),std::end(mountedVolumes),[&size](const QStorageInfo& tmpVolume){
             if(tmpVolume.isReady() && tmpVolume.isValid())
             {
                 size++;
@@ -57,6 +60,7 @@ namespace SysInfo
         return size;
     }
 
+    // Get information about all the mounted volumes
     inline QList<QMap<QString,QString>> getDiskInformation()
     {
         QList<QMap<QString,QString>> diskInfo{};
@@ -81,6 +85,7 @@ namespace SysInfo
         return diskInfo;
     }
 
+    // Call volumes informations and append in a string
     inline QString getDiskInformationAsStr()
     {
         QString diskInfoStr{QString::number(volumesNumber())+" disks\n\n"};
@@ -96,6 +101,7 @@ namespace SysInfo
         return diskInfoStr;
     }
 
+    // Get the information about network interfaces
     inline QList<QMap<QString,QString>> getNetworkInformation()
     {
         QList<QMap<QString,QString>> networkInfo{};
@@ -118,6 +124,7 @@ namespace SysInfo
         return networkInfo;
     }
 
+    // Format network information in a string
     inline QString getNetworkInformationAsStr()
     {
         QString networkInfoStr{""};

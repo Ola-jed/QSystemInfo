@@ -3,16 +3,15 @@
 
 #include "AboutDialog.hpp"
 #include "sysinfo.hpp"
-#include <QMainWindow>
-#include <QScreen>
-#include <QStyle>
 #include <QFile>
+#include <QStyle>
 #include <QLabel>
-#include <QGuiApplication>
-#include <QFileDialog>
-#include <QMessageBox>
+#include <QScreen>
 #include <QTextEdit>
-#include <QDebug>
+#include <QFileDialog>
+#include <QMainWindow>
+#include <QMessageBox>
+#include <QGuiApplication>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
