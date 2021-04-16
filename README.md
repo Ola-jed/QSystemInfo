@@ -14,4 +14,9 @@ cmake --build cmake-build-debug --target QSystemInfo -- -j 3
 cmake-build-debug/QSystemInfo
 ```
 
+## Screenshots
+
+![qsysteminfo](https://user-images.githubusercontent.com/66482155/115027162-45ad7280-9ebb-11eb-982e-5e708e5578ba.png)
+
+
 Import the project if you use an ide.
