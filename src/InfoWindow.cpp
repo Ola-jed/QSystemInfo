@@ -101,26 +101,24 @@ void InfoWindow::saveInfoIntoFile()
     if(filename.isEmpty())
     {
         QMessageBox::warning(this,"Save system info","Enter a valid name");
+        return;
+    }
+    QFile fileToSave{filename};
+    if((!fileToSave.open(QIODevice::ReadWrite)))
+    {
+        QMessageBox::critical(this,"Save system info","Could not save");
+        return;
     }
     else
     {
-        QFile fileToSave{filename};
-        if((!fileToSave.open(QIODevice::ReadWrite)))
+        QTextStream out{&fileToSave};
+        for(auto i = 0;i < ui->tabWidget->count();i++)
         {
-            QMessageBox::critical(this,"Save system info","Could not save");
-            return;
+            out << getTextEditAt(i)->toPlainText();
         }
-        else
-        {
-            QTextStream out{&fileToSave};
-            for(auto i = 0;i < ui->tabWidget->count();i++)
-            {
-                out << getTextEditAt(i)->toPlainText();
-            }
-            QMessageBox::information(this,"Save system info","File saved successfully");
-        }
-        fileToSave.close();
+        QMessageBox::information(this,"Save system info","File saved successfully");
     }
+    fileToSave.close();
 }
 
 // Show the about-dialog

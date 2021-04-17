@@ -19,7 +19,7 @@ namespace SysInfo
     const QString GPU_NAME{"wmic PATH Win32_videocontroller get VideoProcessor "};
     const QString VRAM{"wmic PATH Win32_VideoController get AdapterRAM"};
     const QString LINUX_CPU_NAME {"cat /proc/cpuinfo | grep 'model name' | uniq"};
-    const QString BIOS_KEY{"HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS"};
+    const QString BIOS_KEY{R"(HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\BIOS)"};
 
     // Get information about system, kernel
     inline QMap<QString,QString> getSystemInformation()
@@ -38,10 +38,9 @@ namespace SysInfo
     {
         QString infoStrBuilder{""};
         auto const t {SysInfo::getSystemInformation()};
-        auto const keysList{t.keys()};
-        for(auto const &temp : keysList)
+        for(auto const &temp : t)
         {
-            infoStrBuilder += temp+" : "+t[temp]+"\n\n";
+            infoStrBuilder += t.key(temp) + " : " + temp +"\n\n";
         }
         return infoStrBuilder;
     }
@@ -69,7 +68,7 @@ namespace SysInfo
         {
             if (storage.isValid()  && storage.isReady())
             {
-                auto tempMap = QMap<QString,QString>{};
+                QMap<QString,QString> tempMap{};
                 if(!storage.name().isEmpty())
                 {
                     tempMap.insert({{"Name",storage.name()}});
@@ -92,9 +91,9 @@ namespace SysInfo
         auto const v {SysInfo::getDiskInformation()};
         for(const auto &t : v)
         {
-            for(auto const &temp : t.keys())
+            for(auto const &tempValue : t)
             {
-                diskInfoStr.append(temp+" : "+t[temp]+"\n");
+                diskInfoStr.append(t.key(tempValue) + " : " + tempValue + "\n");
             }
             diskInfoStr.append("\n\n");
         }
@@ -113,7 +112,7 @@ namespace SysInfo
                 {
                     if ( entry.ip().toString().contains("."))
                     {
-                        const auto tempMap = QMap<QString,QString>{{"Interface",networkInterface.name()},
+                        const QMap<QString,QString> tempMap{{"Interface",networkInterface.name()},
                                                      {"IP",entry.ip().toString()},
                                                      {"MAC",networkInterface.hardwareAddress().toLocal8Bit().constData()}};
                         networkInfo.push_back(tempMap);
@@ -131,9 +130,9 @@ namespace SysInfo
         auto const r {SysInfo::getNetworkInformation()};
         for(const auto &t : r)
         {
-            for(auto const &temp : t.keys())
+            for(auto const &tempValue : t)
             {
-                networkInfoStr.append(temp+" : "+t[temp]+"\n");
+                networkInfoStr.append(t.key(tempValue) + " : " + tempValue + "\n");
             }
             networkInfoStr.append("\n");
         }
@@ -168,12 +167,12 @@ namespace SysInfo
     {
         QString cpuAndGpuInfoStr{""};
         auto const y{SysInfo::getCpuAndGpuInfo()};
-        for(auto const &p : y)
+        for(auto const &tempInfoPair : y)
         {
-            for(auto const &g  :p.keys())
+            for(auto const &tempValue : tempInfoPair)
             {
-                cpuAndGpuInfoStr.append(p[g]+"\n");
-                cpuAndGpuInfoStr.append(g+" : "+p[g]+"\n");
+                cpuAndGpuInfoStr.append(tempValue + "\n");
+                cpuAndGpuInfoStr.append(tempInfoPair.key(tempValue) + " : " + tempValue + "\n");
             }
             cpuAndGpuInfoStr.append("\n");
         }
@@ -197,11 +196,11 @@ namespace SysInfo
     {
         QString biosInfoStr{""};
         auto const biosInfo{getBiosInfo()};
-        for(auto const &tmp : biosInfo)
+        for(auto const &tmpBiosInfoPair : biosInfo)
         {
-            for(auto const &e : tmp.keys())
+            for(auto const &tempInfo : tmpBiosInfoPair)
             {
-                biosInfoStr.append(e+" : "+tmp[e]);
+                biosInfoStr.append(tmpBiosInfoPair.key(tempInfo) + " : " + tempInfo);
             }
             biosInfoStr.append("\n");
         }

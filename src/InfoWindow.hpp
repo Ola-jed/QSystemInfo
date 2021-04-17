@@ -1,8 +1,8 @@
 #ifndef QCOMINFO_INFOWINDOW_HPP
 #define QCOMINFO_INFOWINDOW_HPP
 
-#include "AboutDialog.hpp"
 #include "sysinfo.hpp"
+#include "AboutDialog.hpp"
 #include <QFile>
 #include <QStyle>
 #include <QLabel>
@@ -32,7 +32,7 @@ class InfoWindow : public QMainWindow
         Ui::InfoWindow *ui;
         void setLayout();
         void buildTabs();
-        QTextEdit* getTextEditAt(const int index);
+        QTextEdit* getTextEditAt(int index);
 
         void loadAllInfo();
         void loadSystemInfo();
@@ -50,6 +50,7 @@ class InfoWindow : public QMainWindow
         #ifdef Q_OS_WIN // If we are on windows, we need this value
             static constexpr int BIOS_INDEX_IN_TAB{4};
         #endif
+
     private slots:
         void saveInfoIntoFile();
         void onAbout();
