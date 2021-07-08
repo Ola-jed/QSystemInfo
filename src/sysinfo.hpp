@@ -108,7 +108,7 @@ namespace SysInfo
         {
             if (networkInterface.flags().testFlag(QNetworkInterface::IsUp))
             {
-                foreach (const auto &entry, networkInterface.addressEntries())
+                for(const auto &entry: networkInterface.addressEntries())
                 {
                     if ( entry.ip().toString().contains("."))
                     {
