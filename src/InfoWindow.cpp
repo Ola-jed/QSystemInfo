@@ -1,6 +1,6 @@
 // You may need to build the project (run Qt uic code generator) to get "ui_InfoWindow.h" resolved
 #include "InfoWindow.hpp"
-#include "ui_InfoWindow.h"
+#include "../include/ui_InfoWindow.h"
 
 InfoWindow::InfoWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::InfoWindow)
 {
