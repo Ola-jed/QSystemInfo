@@ -6,7 +6,7 @@ QSystemInfo is a lightweight system information tool written in c++ with the qt 
 
 You need to have [qt](https://www.qt.io/download-qt-installer) installed  to build the app.
 
-```bash
+```shell
 # Compile in debug mode
 git clone https://github.com/Ola-jed/QSystemInfo.git
 cd QSystemInfo

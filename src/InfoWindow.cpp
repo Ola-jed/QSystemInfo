@@ -1,4 +1,3 @@
-// You may need to build the project (run Qt uic code generator) to get "ui_InfoWindow.h" resolved
 #include "InfoWindow.hpp"
 #include "../include/ui_InfoWindow.h"
 
@@ -72,7 +71,7 @@ void InfoWindow::loadNetworkInfo()
 
 void InfoWindow::loadBiosInfo()
 {
-#ifdef Q_OS_WIN // If we are on windows, we need this value
+#ifdef Q_OS_WIN // If we are on Windows, we need this value
     getTextEditAt(BIOS_INDEX_IN_TAB)->setText(SysInfo::getBiosInfoAsStr());
 #endif
 }
@@ -83,7 +82,7 @@ void InfoWindow::loadAllInfo()
     loadDiskInfo();
     loadCpuInfo();
     loadNetworkInfo();
-#ifdef Q_OS_WIN // If we are on windows, we can load this function
+#ifdef Q_OS_WIN // If we are on Windows, we can load this function
     loadBiosInfo();
 #endif
 }
@@ -112,7 +111,7 @@ void InfoWindow::saveInfoIntoFile()
     else
     {
         QTextStream out{&fileToSave};
-        for (auto   i = 0; i < ui->tabWidget->count(); i++)
+        for (auto i = 0; i < ui->tabWidget->count(); i++)
         {
             out << getTextEditAt(i)->toPlainText();
         }
