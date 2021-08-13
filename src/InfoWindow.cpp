@@ -97,13 +97,13 @@ QTextEdit *InfoWindow::getTextEditAt(const int index)
 void InfoWindow::saveInfoIntoFile()
 {
     auto const filename{QFileDialog::getSaveFileName(this)};
-    if (filename.isEmpty())
+    if (filename.trimmed().isEmpty())
     {
         QMessageBox::warning(this, "Save system info", "Enter a valid name");
         return;
     }
     QFile fileToSave{filename};
-    if ((!fileToSave.open(QIODevice::ReadWrite)))
+    if ((!fileToSave.open(QIODevice::ReadOnly | QIODevice::Truncate)))
     {
         QMessageBox::critical(this, "Save system info", "Could not save");
         return;
@@ -111,7 +111,7 @@ void InfoWindow::saveInfoIntoFile()
     else
     {
         QTextStream out{&fileToSave};
-        for (auto i = 0; i < ui->tabWidget->count(); i++)
+        for (auto   i = 0; i < ui->tabWidget->count(); i++)
         {
             out << getTextEditAt(i)->toPlainText();
         }
