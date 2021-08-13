@@ -16,7 +16,7 @@ endif()
 set(REQUIRED_LIBS Core Gui Widgets Network)
 set(REQUIRED_LIBS_QUALIFIED Qt${QT_VERSION}::Widgets Qt${QT_VERSION}::Core Qt${QT_VERSION}::Gui Qt${QT_VERSION}::Network)
 
-add_executable(${PROJECT_NAME} main.cpp include/sysinfo.hpp src/InfoWindow.cpp include/InfoWindow.hpp include/InfoWindow.ui resources.qrc src/AboutDialog.cpp include/AboutDialog.hpp include/AboutDialog.ui)
+add_executable(${PROJECT_NAME} main.cpp include/sysinfo.hpp src/InfoWindow.cpp include/InfoWindow.hpp include/InfoWindow.ui resources.qrc src/AboutDialog.cpp include/AboutDialog.hpp include/AboutDialog.ui include/constexprqstring.hpp)
 
 if (NOT CMAKE_PREFIX_PATH)
     message(WARNING "CMAKE_PREFIX_PATH is not defined, you may need to set it "

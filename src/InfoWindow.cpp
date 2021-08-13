@@ -19,21 +19,22 @@ InfoWindow::~InfoWindow()
 // Window resizing and position
 void InfoWindow::setLayout()
 {
-    setFixedSize(900,600);
-    setGeometry(QStyle::alignedRect(Qt::LeftToRight,Qt::AlignCenter,size(),QGuiApplication::primaryScreen()->availableGeometry()));
+    setFixedSize(900, 600);
+    setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, size(),
+                                    QGuiApplication::primaryScreen()->availableGeometry()));
 }
 
 // Creating all the tabs
 void InfoWindow::buildTabs()
 {
-    ui->tabWidget->addTab(new QTextEdit(),QIcon(":assets/system.ico"),tr("System"));
-    ui->tabWidget->addTab(new QTextEdit(),QIcon(":assets/disk.ico"),tr("Disk"));
-    ui->tabWidget->addTab(new QTextEdit(),QIcon(":assets/cpu.ico"),tr("Cpu"));
-    ui->tabWidget->addTab(new QTextEdit(),QIcon(":assets/network.ico"),tr("Network"));
-    #ifdef Q_OS_WIN // If we are on windows, we can call bios information with regedit
-        ui->tabWidget->addTab(new QTextEdit(),QIcon(":assets/bios.ico"),tr("Bios"));
-    #endif
-    for(auto i = 0;i < ui->tabWidget->count();i++)
+    ui->tabWidget->addTab(new QTextEdit(), QIcon(":assets/system.ico"), tr("System"));
+    ui->tabWidget->addTab(new QTextEdit(), QIcon(":assets/disk.ico"), tr("Disk"));
+    ui->tabWidget->addTab(new QTextEdit(), QIcon(":assets/cpu.ico"), tr("Cpu"));
+    ui->tabWidget->addTab(new QTextEdit(), QIcon(":assets/network.ico"), tr("Network"));
+#ifdef Q_OS_WIN // If we are on Windows, we can call bios information with regedit
+    ui->tabWidget->addTab(new QTextEdit(),QIcon(":assets/bios.ico"),tr("Bios"));
+#endif
+    for (auto i = 0; i < ui->tabWidget->count(); i++)
     {
         getTextEditAt(i)->setReadOnly(true);
     }
@@ -41,10 +42,10 @@ void InfoWindow::buildTabs()
 
 void InfoWindow::makeConnections()
 {
-    connect(ui->saveInFile,&QAction::triggered,this,&InfoWindow::saveInfoIntoFile);
-    connect(ui->aboutQSystemInfo,&QAction::triggered,this,&InfoWindow::onAbout);
-    connect(ui->help,&QAction::triggered,this,&InfoWindow::onAbout);
-    connect(ui->aboutQt,&QAction::triggered,this,&QApplication::aboutQt);
+    connect(ui->saveInFile, &QAction::triggered, this, &InfoWindow::saveInfoIntoFile);
+    connect(ui->aboutQSystemInfo, &QAction::triggered, this, &InfoWindow::onAbout);
+    connect(ui->help, &QAction::triggered, this, &InfoWindow::onAbout);
+    connect(ui->aboutQt, &QAction::triggered, this, &QApplication::aboutQt);
 }
 
 // Loading all the information
@@ -71,9 +72,9 @@ void InfoWindow::loadNetworkInfo()
 
 void InfoWindow::loadBiosInfo()
 {
-    #ifdef Q_OS_WIN // If we are on windows, we need this value
-        getTextEditAt(BIOS_INDEX_IN_TAB)->setText(SysInfo::getBiosInfoAsStr());
-    #endif
+#ifdef Q_OS_WIN // If we are on windows, we need this value
+    getTextEditAt(BIOS_INDEX_IN_TAB)->setText(SysInfo::getBiosInfoAsStr());
+#endif
 }
 
 void InfoWindow::loadAllInfo()
@@ -82,40 +83,40 @@ void InfoWindow::loadAllInfo()
     loadDiskInfo();
     loadCpuInfo();
     loadNetworkInfo();
-    #ifdef Q_OS_WIN // If we are on windows, we can load this function
-        loadBiosInfo();
-    #endif
+#ifdef Q_OS_WIN // If we are on windows, we can load this function
+    loadBiosInfo();
+#endif
 }
 
 // Get the item at the given index
 QTextEdit *InfoWindow::getTextEditAt(const int index)
 {
-    return qobject_cast<QTextEdit*>(ui->tabWidget->widget(index));
+    return qobject_cast<QTextEdit *>(ui->tabWidget->widget(index));
 }
 
 // Save all system information into a file
 void InfoWindow::saveInfoIntoFile()
 {
-    auto const filename {QFileDialog::getSaveFileName(this)};
-    if(filename.isEmpty())
+    auto const filename{QFileDialog::getSaveFileName(this)};
+    if (filename.isEmpty())
     {
-        QMessageBox::warning(this,"Save system info","Enter a valid name");
+        QMessageBox::warning(this, "Save system info", "Enter a valid name");
         return;
     }
     QFile fileToSave{filename};
-    if((!fileToSave.open(QIODevice::ReadWrite)))
+    if ((!fileToSave.open(QIODevice::ReadWrite)))
     {
-        QMessageBox::critical(this,"Save system info","Could not save");
+        QMessageBox::critical(this, "Save system info", "Could not save");
         return;
     }
     else
     {
         QTextStream out{&fileToSave};
-        for(auto i = 0;i < ui->tabWidget->count();i++)
+        for (auto   i = 0; i < ui->tabWidget->count(); i++)
         {
             out << getTextEditAt(i)->toPlainText();
         }
-        QMessageBox::information(this,"Save system info","File saved successfully");
+        QMessageBox::information(this, "Save system info", "File saved successfully");
     }
     fileToSave.close();
 }

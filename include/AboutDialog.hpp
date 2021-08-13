@@ -13,13 +13,13 @@ QT_END_NAMESPACE
 
 class AboutDialog : public QDialog
 {
-    Q_OBJECT
-    public:
-        explicit AboutDialog(QWidget *parent = nullptr);
-        ~AboutDialog() override;
+Q_OBJECT
+public:
+    explicit AboutDialog(QWidget *parent = nullptr);
+    ~AboutDialog() override;
 
-    private:
-        Ui::AboutDialog *ui;
+private:
+    Ui::AboutDialog *ui;
 };
 
 #endif //QSYSTEMINFO_ABOUTDIALOG_HPP
